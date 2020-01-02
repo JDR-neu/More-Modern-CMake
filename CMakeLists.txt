@@ -1,5 +1,5 @@
 # 参考： https://www.jianshu.com/p/3711361d10a5
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.12)
 project(cmake_template)
 
 find_package(Eigen3 REQUIRED)
@@ -17,7 +17,7 @@ target_include_directories(savepic
         PRIVATE
         ${EIGEN3_INCLUDE_DIR} # Eigen库只在cpp文件中包含，不涉及接口，故设为PRIVATE。
         )
-target_link_libraries(savepic PUBLIC ${OpenCV_LIBS} PRIVATE ${EIGEN3_INCLUDE_DIR}) # 相应链接库文件
+target_link_libraries(savepic PUBLIC ${OpenCV_LIBS} PRIVATE ${EIGEN3_LIBRARIES}) # 相应链接库文件
 
 #install
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/install") #如果没有空格，加不加引号都是无所谓的；但是目录中很可能有空格，所以目录最好加引号！
