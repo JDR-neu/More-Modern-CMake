@@ -9,6 +9,8 @@ project( MathLibs
 
 # An OBJECT-library, used to only compile common sources once
 # which are used in both math-libraries.
+# object-library，用来避免生成不同库的时候用到相同的文件，而重复编译相同的文件；同时相比于生成普通的库，不会真正产生库文件。
+# 详细解释：https://gitlab.kitware.com/cmake/community/wikis/doc/tutorials/Object-Library
 add_library( basicmath_ObjLib OBJECT )
 target_sources( basicmath_ObjLib
     PRIVATE   "src/BasicMath.cpp"
@@ -23,6 +25,7 @@ target_compile_features( basicmath_ObjLib
     PUBLIC cxx_constexpr )
 
 # Requires "Boost.Outcome" (which has some requirements, too).
+# CMake 3.12之前，object-library是不能使用target_link_libraries的。
 target_link_libraries( basicmath_ObjLib PUBLIC Boost::outcome )
 
 # A shared library for basic-math functionality.
@@ -40,3 +43,4 @@ target_link_libraries( extmath PRIVATE Boost::graph )
 # Create ALIAS targets.
 add_library( MyCalc::basicmath ALIAS basicmath )
 add_library( MyCalc::extmath ALIAS extmath )
+# 不明白为什么MyCalc::extmath等这两个可以直接在外层使用？
